@@ -84,25 +84,25 @@ interfaces for the management and public interfaces.
 
 Edit The Default standalone.xml File:
 
-	1. Edit the standalone.xml file in your favorite text editor.
+1. Edit the standalone.xml file in your favorite text editor.
 
-	2. Next, update the following section:
+2. Next, update the following section:
 
-	From: 
-		<interface name=”management”>
-		<inet-address value=”${jboss.bind.address:127.0.0.1}/>
-		</interface>
-		<interface name=”public”>
-		<inet-address value=”${jboss.bind.address:127.0.0.1}”/>
-		</interface>
+From: 
+	<interface name=”management”>
+	<inet-address value=”${jboss.bind.address:127.0.0.1}/>
+	</interface>
+	<interface name=”public”>
+	<inet-address value=”${jboss.bind.address:127.0.0.1}”/>
+	</interface>
 
-	To:
-		<interface name=”management”>
-		<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-		</interface>
-		<interface name=”public”>
-		<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-		</interface>
+To:
+	<interface name=”management”>
+	<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+	</interface>
+	<interface name=”public”>
+	<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+	</interface>
 
 NOTE: By default, JBoss 7 will only bind to localhost. This does not allow any remote access 
 to your jboss server. For our amazon aws installation, we define the jboss.bind.address property 
@@ -114,44 +114,44 @@ can change. This is why we opted for 0.0.0.0.
 Step 6: Activate and Start The JBoss AS Standalone Service 
 ------------------------------------------------------
 
-1. Add the new jboss-eap-rhel.sh service to list of automatically started services using the chkconfig service management command:
+1. Add the new jboss-eap-rhel.sh service to list of automatically started services using the chkconfig service management command: 
 
 	$ chkconfig --add jboss-as-standalone.sh
 		
 2. Test that the service has been installed correctly by using one of the following commands.
 
-a. For Red Hat Enterprise Linux 6:
+	a. For Red Hat Enterprise Linux 6: 
 
-	$ service jboss-as-standalone.sh start
+		$ service jboss-as-standalone.sh start
 			
-b. For Red Hat Enterprise Linux 7:
+	b. For Red Hat Enterprise Linux 7:  
 
-	$ service jboss-as-standalone start
+		$ service jboss-as-standalone start
 			
 The service will start. If you get an error, check the error logs and make sure that the options in the configuration file are set correctly.
 
-3. To make the service start automatically when the Red Hat Enterprise Linux server starts, run the following command:
+3. To make the service start automatically when the Red Hat Enterprise Linux server starts, run the following command: 
 
 	$ chkconfig jboss-as-standalone.sh on
 			
-Step 7: Removing the JBoss AS Service in RHEL  
----------------------------------------------
+Step 7: Removing the JBoss AS Service in RHEL 
+---------------------------------------------- 
 
-1. If the service is running, open a terminal and stop the service with one of the following commands.
+1. If the service is running, open a terminal and stop the service with one of the following commands. 
 
-a. For Red Hat Enterprise Linux 6:
+	a. For Red Hat Enterprise Linux 6: 
 
-	$ service jboss-as-standalone.sh stop
+		$ service jboss-as-standalone.sh stop
 			
-b. For Red Hat Enterprise Linux 7:
+	b. For Red Hat Enterprise Linux 7: 
 
-	$ service jboss-as-standalone stop
+		$ service jboss-as-standalone stop
 			
-2. Remove JBoss EAP from the list of services:
+2. Remove JBoss EAP from the list of services: 
 
 	$ chkconfig --del jboss-as-standalone.sh
 			
-3. Delete the service configuration file and startup script:
+3. Delete the service configuration file and startup script: 
 
-	$ rm /etc/init.d/jboss-eap-rhel.sh
+	$ rm /etc/init.d/jboss-eap-rhel.sh  
 	$ rm /etc/jboss-as/jboss-as.conf
