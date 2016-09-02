@@ -19,7 +19,7 @@ Step 1: JDK Installation And Verification
 -----------------------------------------
 
 Before you install JBoss AS, you must first install a JDK. Any JDK can be used, such as Sun
-JDK, OpenJDK, IBM JDK, or JRocket etc. We chose Open JDK 7 for this tutorial.
+JDK, OpenJDK, IBM JDK, or JRocket etc. We chose OpenJDK 7 for this tutorial.
 
 1. Installing OpenJDK:
 
@@ -38,7 +38,7 @@ Step 2: Download JBoss And The Installation Procedure
 
 1. Downloading JBoss AS 7.1.1.Final:
 
-		$ wget wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip
+		$ wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip
 		
 2. Installing JBoss AS 7.1.1.Final:
 
@@ -162,7 +162,7 @@ Step 6: Activate and Start The JBoss AS Standalone Service
 
 		$ chkconfig jboss-as-standalone.sh on
 			
-Step 7: Removing the JBoss AS Service in RHEL 
+OPTIONAL: Step 7: Removing the JBoss AS Service in RHEL 
 ---------------------------------------------- 
 
 1. If the service is running, open a terminal and stop the service with one of the following commands. 
@@ -183,3 +183,57 @@ Step 7: Removing the JBoss AS Service in RHEL
 
 		$ rm /etc/init.d/jboss-eap-rhel.sh  
 		$ rm /etc/jboss-as/jboss-as.conf
+		
+Step 8: Installing & Configuring Apache Httpd 
+---------------------------------------------
+
+1. Download Apache httpd
+	
+	Get the httpd from the JBoss download site:
+	
+		$ wget http://downloads.jboss.org/mod\_cluster//1.2.6.Final/linux-x86\_64/mod\_cluster-1.2.6.Final-linux2-x64.tar.gz
+
+2. Install the while httpd
+	
+	The httpd-side bundles are gzipped tars and include a full httpd install. As they contain already an Apache httpd install you don't need to download Apache httpd. Just extract them in root, e.g.
+
+ 		$ tar xvf mod\_cluster-1.2.6.Final-linux2-x64.tar.gz
+ 		
+ 	That will give you a full httpd install in your /opt/jboss directory.
+ 	
+3. Configuration
+	
+	The main configuration for the server would be under the
+
+		opt/jboss/httpd/httpd/conf
+
+	Ensure the Listen directive is setup appropriately.
+
+		Listen 135.101.232.143:8081
+		
+	At the end of the file ensure that the mod_cluster directive are appropriately setup
+
+		Listen IP_ADDRESS:PORT
+		<VirtualHost IP_ADDRESS:PORT>  
+			  <Location />
+				  Order deny,allow
+				  Deny from all
+				  Allow from *.MYDOMAIN.COM
+			  </Location>
+	  
+			  KeepAliveTimeout 60
+			  MaxKeepAliveRequests 0
+			  EnableMCPMReceive On
+	  
+			  ManagerBalancerName mycluster
+			  ServerAdvertise On
+	
+		</VirtualHost>
+
+	Save the file and exit.
+
+	Now, execute Apache via the following command
+
+		/opt/app/jboss/httpd/sbin/apachectl -k start
+		
+	Verify by opening the url: http://IP\_ADDRESS:PORT/mod\_cluster\_manager in your browser
