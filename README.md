@@ -205,7 +205,7 @@ Step 8: Installing & Configuring Apache Httpd
 	
 	The main configuration for the server would be under the
 
-		opt/jboss/httpd/httpd/conf
+		$ opt/jboss/httpd/httpd/conf
 
 	Ensure the Listen directive is setup appropriately.
 
@@ -229,11 +229,13 @@ Step 8: Installing & Configuring Apache Httpd
 			  ServerAdvertise On
 	
 		</VirtualHost>
-
+	
+	These directives create a new virtual server which listens on IP_ADDRESS:PORT, allows connections from MYDOMAIN.COM, and advertises itself as a balancer called mycluster. These directives are covered in detail in the documentation for Apache Web Server.
+	
 	Save the file and exit.
 
 	Now, execute Apache via the following command
 
-		/opt/app/jboss/httpd/sbin/apachectl -k start
+		$ /opt/app/jboss/httpd/sbin/apachectl -k start
 		
 	Verify by opening the url: http://IP\_ADDRESS:PORT/mod\_cluster\_manager in your browser
