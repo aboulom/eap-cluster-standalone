@@ -3,8 +3,8 @@ Configuring a JBoss Cluster in Standalone mode as a Service with mod_cluster in 
 Author: Allen Boulom  
 Level: Beginner  
 Summary: This README demonstrates how to configure a JBoss cluster in standalone mode as a 
-service with mod\_cluster in Red Hat Enterprise Linux. 
-Target Product: JBoss AS, Apache mod\_cluster 
+service with mod\_cluster in Red Hat Enterprise Linux.  
+Target Product: JBoss AS, Apache mod\_cluster  
 Source: https://github.com/aboulom/eap-cluster-domain
 
 Overview
@@ -23,26 +23,26 @@ JDK, OpenJDK, IBM JDK, or JRocket etc. We chose Open JDK 7 for this tutorial.
 
 1. Installing OpenJDK:
 
-Issue the following command to install the JDK:
+	Issue the following command to install the JDK:
 
-		$ yum install java-1.7.0-openjdk-devel
+			$ yum install java-1.7.0-openjdk-devel
 		
 2. Confirming The Install:
 
-Issue the following command to confirm the proper version of the JDK is on your classpath:
+	Issue the following command to confirm the proper version of the JDK is on your classpath:
 
-		$ java -version
+			$ java -version
 		
 Step 2: Download JBoss And The Installation Procedure 
 -----------------------------------------------------
 
 1. Downloading JBoss AS 7.1.1.Final:
 
-		$ wget wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip
+			$ wget wget http://download.jboss.org/jbossas/7.1/jboss-as-7.1.1.Final/jboss-as-7.1.1.Final.zip
 		
 2. Installing JBoss AS 7.1.1.Final:
 
-		$ unzip jboss-as-7.1.1.Final.zip -d /usr/share
+			$ unzip jboss-as-7.1.1.Final.zip -d /usr/share
 		
 Alternatively, any directory can be chosen for the JBoss 7 installation.
 
@@ -84,31 +84,25 @@ interfaces for the management and public interfaces.
 
 Edit The Default standalone.xml File:
 
-	Step 1:
+	1. Edit the standalone.xml file in your favorite text editor.
 
-	Edit the standalone.xml file in your favorite text editor.
+	2. Next, update the following section:
 
-	Step 2:
+		From: 
+				<interface name=”management”>
+				<inet-address value=”${jboss.bind.address:127.0.0.1}/>
+				</interface>
+				<interface name=”public”>
+				<inet-address value=”${jboss.bind.address:127.0.0.1}”/>
+				</interface>
 
-	Next, update the following section:
-
-	From: 
-	
-		<interface name=”management”>
-		<inet-address value=”${jboss.bind.address:127.0.0.1}/>
-		</interface>
-		<interface name=”public”>
-		<inet-address value=”${jboss.bind.address:127.0.0.1}”/>
-		</interface>
-
-	To:
-	
-		<interface name=”management”>
-		<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-		</interface>
-		<interface name=”public”>
-		<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-		</interface>
+		To:
+				<interface name=”management”>
+				<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+				</interface>
+				<interface name=”public”>
+				<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+				</interface>
 
 NOTE: By default, JBoss 7 will only bind to localhost. This does not allow any remote access 
 to your jboss server. For our amazon aws installation, we define the jboss.bind.address property 
@@ -126,11 +120,11 @@ Step 6: Activate and Start The JBoss AS Standalone Service
 		
 2. Test that the service has been installed correctly by using one of the following commands.
 
-		a. For Red Hat Enterprise Linux 6:
+		For Red Hat Enterprise Linux 6:
 
 			$ service jboss-as-standalone.sh start
 			
-		b. For Red Hat Enterprise Linux 7:
+		For Red Hat Enterprise Linux 7:
 
 			$ service jboss-as-standalone start
 			
@@ -145,11 +139,11 @@ Step 7: Removing the JBoss AS Service in RHEL
 
 1. If the service is running, open a terminal and stop the service with one of the following commands.
 
-		a. For Red Hat Enterprise Linux 6:
+		For Red Hat Enterprise Linux 6:
 
 			$ service jboss-as-standalone.sh stop
 			
-		b. For Red Hat Enterprise Linux 7:
+		For Red Hat Enterprise Linux 7:
 
 			$ service jboss-as-standalone stop
 			
