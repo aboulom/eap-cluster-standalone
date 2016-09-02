@@ -44,7 +44,7 @@ Step 2: Download JBoss And The Installation Procedure
 
 		$ unzip jboss-as-7.1.1.Final.zip -d /usr/share
 		
-Alternatively, any directory can be chosen for the JBoss 7 installation.
+	Alternatively, any directory can be chosen for the JBoss 7 installation.
 
 Step 3: Customize the start-up options in the jboss-as.conf file 
 -----------------------------------------------------------------
@@ -58,7 +58,7 @@ privileges. It is never a good idea to run JBoss as root for various reasons.
 
 		$ adduser jboss 
 		
-Alternatively, any username can be used. However, the username must be specified in the jboss-as.conf file.
+	Alternatively, any username can be used. However, the username must be specified in the jboss-as.conf file. 
 
 2. Add The “jboss” User To The jboss-as.conf File:
 
@@ -70,23 +70,21 @@ Alternatively, any username can be used. However, the username must be specified
 
 	From:
 	
-		#JBOSS_USER=jboss-as
+		 #JBOSS_USER=jboss-as
 
 	To:
 	
-		JBOSS_USER=jboss
+		 JBOSS_USER=jboss
 	   
 3. Add JBOSS_HOME To jboss-as.conf File: 
 
 	Edit the “jboss-as.conf” to add the JBOSS_HOME destination:
 	
-		JBOSS_HOME=/usr/share/jboss-as-7.1.1.Final
-	   
-The startup script and an associated configuration file are located in the EAP_HOME/bin/init.d/ directory. Open jboss-eap.conf in a text editor and set the options for your JBoss EAP installation.
-
+		JBOSS_HOME=/usr/share/jboss-as-7.1.1.Final 
+		
 There are several options in jboss-eap.conf file, but at the minimum you must provide the correct values for JBOSS\_HOME and the JBOSS\_USER.
 
-You can customize the other options provided in the configuration file, but if you do not, it will default to starting a standalone JBoss EAP server using the default configuration file.
+You can customize the other options provided in the configuration file, but if you do not, it will default to starting a standalone JBoss EAP server using the default configuration file. 
 
 Step 4: Create The JBoss AS 7.1.1 Standalone Service  
 ---------------------------------------------------- 
@@ -95,7 +93,7 @@ Step 4: Create The JBoss AS 7.1.1 Standalone Service
 
 		$ mkdir /etc/jboss-as
 		
-2. Copy the modified service configuration file to the /etc/jboss-as directory:
+2. Copy the modified service configuration file to the /etc/jboss-as directory: 
 
 		$ cp /usr/share/jboss-as-7.1.1.Final/bin/init.d/jboss-as.conf /etc/jboss-as
 		
@@ -118,21 +116,21 @@ Edit The Default standalone.xml File:
 
 	From: 
 
-	 <interface name=”management”>
-	 <inet-address value=”${jboss.bind.address:127.0.0.1}/>
-	 </interface>
-	 <interface name=”public”>
-	 <inet-address value=”${jboss.bind.address:127.0.0.1}”/>
-	 </interface>
+		<interface name=”management”>
+		<inet-address value=”${jboss.bind.address:127.0.0.1}/>
+		</interface>
+	 	<interface name=”public”>
+	 	<inet-address value=”${jboss.bind.address:127.0.0.1}”/>
+	 	</interface>
 
 	To:
 
-	 <interface name=”management”>
-	 <inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-	 </interface>
-	 <interface name=”public”>
-	 <inet-address value=”${jboss.bind.address:0.0.0.0}”/>
-	 </interface>
+	 	<interface name=”management”>
+	 	<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+	 	</interface>
+	 	<interface name=”public”>
+		<inet-address value=”${jboss.bind.address:0.0.0.0}”/>
+	 	</interface>
 
 NOTE: By default, JBoss 7 will only bind to localhost. This does not allow any remote access 
 to your jboss server. For our amazon aws installation, we define the jboss.bind.address property 
@@ -158,7 +156,7 @@ Step 6: Activate and Start The JBoss AS Standalone Service
 
 		$ service jboss-as-standalone start
 			
-The service will start. If you get an error, check the error logs and make sure that the options in the configuration file are set correctly. 
+	The service will start. If you get an error, check the error logs and make sure that the options in the configuration file are set correctly. 
 
 3. To make the service start automatically when the Red Hat Enterprise Linux server starts, run the following command: 
 
